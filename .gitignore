@@ -1,0 +1,30 @@
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+config.local.php
+
+# Runtime logs and temporary files
+*.log
+*.tmp
+*.cache
+*.bak
+*.swp
+php_error.log
+error_log
+
+# Generated uploads
+uploads/offers/*
+uploads/site/*
+!uploads/offers/.gitkeep
+!uploads/site/.gitkeep
+
+# Dependencies
+/vendor/
+/node_modules/
+
+# IDE and operating-system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

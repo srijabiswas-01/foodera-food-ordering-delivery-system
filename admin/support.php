@@ -1,0 +1,18 @@
+<?php
+require_once __DIR__ . '/includes/bootstrap.php'; adminRequireLogin(); ensureMisTables();
+$conn = adminDb();
+if (adminVerifyPost() && isset($_POST['update_ticket'])) {
+    $ticketId = (int)($_POST['ticket_id'] ?? 0); $status = $_POST['status'] ?? ''; $reply = trim($_POST['reply'] ?? '');
+    $allowed = array('open','in_progress','waiting_for_customer','resolved','closed');
+    if ($ticketId && in_array($status, $allowed, true)) {
+        $stmt = mysqli_prepare($conn, 'UPDATE support_tickets SET status=?,assigned_admin=? WHERE ticket_id=?'); $admin=$_SESSION['admin_email']; mysqli_stmt_bind_param($stmt,'ssi',$status,$admin,$ticketId); mysqli_stmt_execute($stmt);
+        if ($reply !== '') { $message = mysqli_prepare($conn, "INSERT INTO support_ticket_messages(ticket_id,sender_type,sender_identifier,message) VALUES(?, 'admin', ?, ?)"); mysqli_stmt_bind_param($message,'iss',$ticketId,$admin,$reply); mysqli_stmt_execute($message); }
+        adminRedirect('support.php', 'Support ticket updated.');
+    }
+    adminRedirect('support.php', 'Choose a valid ticket status.');
+}
+$tickets = adminRows('SELECT * FROM support_tickets ORDER BY FIELD(status,\'open\',\'in_progress\',\'waiting_for_customer\',\'resolved\',\'closed\'),updated_at DESC');
+$adminTitle='Support tickets'; $adminPage='support'; include __DIR__ . '/includes/header.php';
+?>
+<section class="admin-card"><div class="admin-toolbar"><div><h2>Customer support queue</h2><p class="admin-muted">Contact requests are retained as tickets, assigned to the current admin, and kept with their conversation history.</p></div></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Ticket</th><th>Customer</th><th>Subject</th><th>Status</th><th>Update</th></tr></thead><tbody><?php foreach($tickets as $ticket){ $messages=adminRows('SELECT sender_type,sender_identifier,message,created_at FROM support_ticket_messages WHERE ticket_id='.(int)$ticket['ticket_id'].' ORDER BY message_id'); ?><tr><td><strong><?php echo adminEscape($ticket['ticket_reference']); ?></strong><br><span class="admin-muted"><?php echo adminEscape($ticket['created_at']); ?></span></td><td><?php echo adminEscape($ticket['customer_email']); ?><?php if($ticket['orderid']){ ?><br><span class="admin-muted">Order #<?php echo (int)$ticket['orderid']; ?></span><?php } ?></td><td><strong><?php echo adminEscape($ticket['subject']); ?></strong><details><summary>Conversation</summary><?php foreach($messages as $message){ ?><p><strong><?php echo adminEscape(ucfirst($message['sender_type'])); ?>:</strong> <?php echo adminEscape($message['message']); ?></p><?php } ?></details></td><td><span class="admin-badge live"><?php echo adminEscape(ucwords(str_replace('_',' ',$ticket['status']))); ?></span></td><td><form method="post" class="admin-form"><input type="hidden" name="csrf" value="<?php echo adminEscape(adminToken()); ?>"><input type="hidden" name="ticket_id" value="<?php echo (int)$ticket['ticket_id']; ?>"><select name="status"><?php foreach(array('open','in_progress','waiting_for_customer','resolved','closed') as $status){ ?><option value="<?php echo $status; ?>"<?php echo $ticket['status']===$status?' selected':''; ?>><?php echo ucwords(str_replace('_',' ',$status)); ?></option><?php } ?></select><textarea name="reply" rows="2" maxlength="4000" placeholder="Reply to customer (optional)"></textarea><button class="admin-btn" name="update_ticket">Save update</button></form></td></tr><?php } ?></tbody></table><?php if(!$tickets){ ?><p class="admin-muted">No support tickets yet.</p><?php } ?></div></section>
+<?php include __DIR__ . '/includes/footer.php'; ?>

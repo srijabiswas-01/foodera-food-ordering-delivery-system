@@ -1,0 +1,11 @@
+/* A selector exists only while the order is still eligible for a dish-removal request. */
+.order-dish input:disabled { display: none; }
+.order-dish:has(input:disabled) { cursor: default; grid-template-columns: 0 64px minmax(0, 1fr) auto; }
+.order-dish:has(input:disabled) .order-dish-image { grid-column: 2; }
+.order-dish:has(input:disabled) .order-dish-copy { grid-column: 3; }
+.order-dish:has(input:disabled) > b { grid-column: 4; }
+.order-dish:has(input:disabled):hover { background: transparent; }
+.order-dish input[type="checkbox"], .order-dish input[type="radio"] { appearance: none; width: 19px; height: 19px; margin: 0; border: 2px solid var(--muted); border-radius: 50%; background: var(--surface); cursor: pointer; }
+.order-dish input[type="checkbox"]:checked, .order-dish input[type="radio"]:checked { border-color: var(--primary); box-shadow: inset 0 0 0 4px var(--surface); background: var(--primary); }
+.order-dish input[type="checkbox"]:focus-visible, .order-dish input[type="radio"]:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+@media (max-width: 520px) { .order-dish:has(input:disabled) { grid-template-columns: 0 54px minmax(0, 1fr); } .order-dish:has(input:disabled) > b { grid-column: 3; justify-self: start; } }

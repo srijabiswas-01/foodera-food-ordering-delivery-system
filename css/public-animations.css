@@ -1,0 +1,25 @@
+@media (prefers-reduced-motion: no-preference) {
+    .site-header-nav { animation: foodera-nav-enter .48s ease both; }
+    .site-logo-link { transition: transform .2s ease; }
+    .site-logo-link:hover { transform: translateY(-2px); }
+    .btn, .admin-btn, .offer-use, .offers-primary-action, .home-offer-carousel .container a, .menu-filter .filter-btn, .offers-category-links button { transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease; }
+    .btn:hover, .offer-use:hover, .offers-primary-action:hover, .home-offer-carousel .container a:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(20, 23, 29, .16); }
+    .food-items, .offer-card, .foodera-blog-card, .profile-card, .why-choose, .service-box { transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
+    .food-items:hover, .offer-card:hover, .foodera-blog-card:hover, .profile-card:hover, .service-box:hover { transform: translateY(-5px); box-shadow: 0 15px 28px rgba(20, 23, 29, .13); }
+    [data-foodera-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; transition-delay: var(--foodera-reveal-delay, 0ms); }
+    [data-foodera-reveal].is-visible { opacity: 1; transform: translateY(0); }
+    .home-offer-carousel .carousel-item.active img { animation: foodera-image-enter .6s ease both; }
+    .home-offer-carousel .carousel-item.active .container > * { animation: foodera-copy-enter .45s ease both; }
+    .home-offer-carousel .carousel-item.active .container > *:nth-child(2) { animation-delay: .06s; }
+    .home-offer-carousel .carousel-item.active .container > *:nth-child(3) { animation-delay: .12s; }
+    .home-offer-carousel .carousel-item.active .container > *:nth-child(4) { animation-delay: .18s; }
+    .home-offer-carousel .carousel-item.active .container > *:nth-child(5) { animation-delay: .24s; }
+}
+
+@keyframes foodera-nav-enter { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes foodera-image-enter { from { opacity: .01; transform: scale(1.04); } to { opacity: 1; transform: scale(1); } }
+@keyframes foodera-copy-enter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

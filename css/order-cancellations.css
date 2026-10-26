@@ -1,0 +1,17 @@
+.order-cancellation-stack {
+    margin: 14px 0 0;
+    padding: 12px;
+    border: 1px solid color-mix(in srgb, #c32b16, var(--border) 55%);
+    border-radius: 6px;
+    background: color-mix(in srgb, #c32b16, var(--bg) 94%);
+}
+
+.order-cancellation-stack h4 { margin: 0 0 8px; font-size: 1.05rem; }
+.order-cancellation-stack p { margin: 0 0 8px; color: var(--muted); font-size: .95rem; }
+.order-cancellation-stack ul { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.order-cancellation-stack li { display: flex; justify-content: space-between; gap: 12px; font-size: .95rem; }
+.order-cancellation-stack li span:last-child { color: var(--muted); white-space: nowrap; }
+
+@media (max-width: 520px) {
+    .order-cancellation-stack li { display: grid; gap: 2px; }
+}

@@ -1,0 +1,122 @@
+/* Shared table system for every admin list view. Page-specific table CSS loads after this file. */
+.admin-table-wrap {
+    position: relative;
+    overflow: auto;
+    margin: 0 -2px;
+    border: 1px solid #dfe5e9;
+    border-radius: 7px;
+    background: #fff;
+    scrollbar-color: #b7c0c8 #f3f5f6;
+    scrollbar-width: thin;
+}
+
+.admin-table-wrap::-webkit-scrollbar { height: 9px; width: 9px; }
+.admin-table-wrap::-webkit-scrollbar-track { background: #f3f5f6; }
+.admin-table-wrap::-webkit-scrollbar-thumb { background: #b7c0c8; border-radius: 10px; }
+
+.admin-table {
+    width: 100%;
+    min-width: 680px;
+    border-collapse: separate;
+    border-spacing: 0;
+    color: #26313b;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.admin-table thead th,
+.admin-table > tbody > tr:first-child > th {
+    padding: 12px 14px;
+    border-bottom: 1px solid #d9e0e5;
+    background: #f6f8f9;
+    color: #62707d;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    line-height: 1.2;
+    text-align: left;
+    text-transform: uppercase;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.admin-table th:first-child { border-top-left-radius: 6px; }
+.admin-table th:last-child { border-top-right-radius: 6px; }
+
+.admin-table td {
+    padding: 14px;
+    border-bottom: 1px solid #e8ecef;
+    color: #26313b;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.admin-table tbody tr { transition: background-color .16s ease; }
+.admin-table tbody tr:nth-child(even) { background: #fbfcfc; }
+.admin-table tbody tr:hover { background: #fff8f4; }
+.admin-table tbody tr:last-child td { border-bottom: 0; }
+
+.admin-table td:first-child,
+.admin-table th:first-child { padding-left: 16px; }
+.admin-table td:last-child,
+.admin-table th:last-child { padding-right: 16px; }
+.admin-table td strong { color: #18242e; font-weight: 700; }
+.admin-table td small { display: block; margin-top: 2px; color: #6d7882; font-size: 12px; }
+
+.admin-table img {
+    width: 48px;
+    height: 40px;
+    display: block;
+    object-fit: cover;
+    border: 1px solid #e2e7ea;
+    border-radius: 5px;
+    background: #f4f6f7;
+}
+
+.admin-table select,
+.admin-table input:not([type="checkbox"]):not([type="radio"]) {
+    min-height: 34px;
+    max-width: 220px;
+    border: 1px solid #c9d2d9;
+    border-radius: 4px;
+    background: #fff;
+    color: #26313b;
+    padding: 6px 9px;
+}
+
+.admin-table input[type="checkbox"],
+.admin-table input[type="radio"] { accent-color: #ff3d00; }
+
+.admin-table .admin-actions {
+    gap: 6px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.admin-table .admin-btn {
+    min-height: 34px;
+    padding: 7px 10px;
+    font-size: 13px;
+}
+
+.admin-table .admin-badge { font-weight: 700; white-space: nowrap; }
+
+.admin-pagination {
+    align-items: center;
+    border-top: 1px solid #e7ebee;
+    margin-top: 2px;
+    padding: 16px 0 0;
+}
+
+.admin-pagination button { min-width: 38px; height: 36px; }
+
+@media (max-width: 720px) {
+    .admin-table-wrap { border-radius: 6px; }
+    .admin-table { min-width: 590px; font-size: 12px; }
+    .admin-table thead th { padding: 11px 12px; }
+    .admin-table td { padding: 12px; }
+    .admin-table td:first-child,
+    .admin-table th:first-child { padding-left: 12px; }
+    .admin-table td:last-child,
+    .admin-table th:last-child { padding-right: 12px; }
+}

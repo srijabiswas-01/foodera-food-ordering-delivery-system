@@ -1,0 +1,8 @@
+.operations-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 20px;padding:5px;border:1px solid var(--admin-border,#dfe3e6);border-radius:9px;background:var(--admin-surface,#fff)}
+.operations-tabs button{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border:0;border-radius:6px;background:transparent;color:var(--admin-muted,#66727d);font:700 13px inherit;cursor:pointer}
+.operations-tabs button:hover{background:var(--admin-bg,#f4f6f7);color:var(--admin-text,#20242a)}
+.operations-tabs button.is-active{background:var(--admin-primary,#ff4b1f);color:#fff}
+.operations-tabs-count{display:grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:color-mix(in srgb,currentColor,transparent 82%);font-size:11px}
+.operations-tab-panel[hidden]{display:none!important}
+.operations-control-link{margin:-10px 0 20px;width:max-content}
+@media(max-width:560px){.operations-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.operations-tabs button{justify-content:center;padding:9px 7px}}

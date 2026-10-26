@@ -1,0 +1,20 @@
+.order-items-detail { overflow: hidden; }
+.order-dish { transition: background .18s ease, border-color .18s ease; }
+.order-dish:has(input:checked) { margin:0 -10px; padding:10px; border-color:color-mix(in srgb,var(--primary),var(--border) 38%); background:color-mix(in srgb,var(--primary),var(--surface) 92%); }
+.order-dish input[type="radio"] { appearance:none; width:18px; height:18px; margin:0; border:2px solid var(--muted); border-radius:50%; background:transparent; }
+.order-dish input[type="radio"]:checked { border-color:var(--primary); box-shadow:inset 0 0 0 4px var(--surface); background:var(--primary); }
+.order-dish-selection-note { display:flex; align-items:center; gap:7px; margin:14px 0 0; color:var(--muted); font-size:.95rem; }
+.order-dish-selection-note .bi { color:var(--primary); }
+.order-dish-removal { margin-top:10px; border-color:color-mix(in srgb,var(--primary),var(--border) 35%); box-shadow:0 8px 24px rgba(0,0,0,.08); }
+.order-dish-removal.is-ready { animation:order-control-in .2s ease both; }
+.order-full-cancel { margin-top:12px; border:1px solid color-mix(in srgb,#c32b16,var(--border) 65%); border-radius:7px; background:color-mix(in srgb,#c32b16,var(--bg) 97%); }
+.order-full-cancel summary { display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:9px; padding:13px 14px; color:#ef907e; cursor:pointer; list-style:none; font-weight:700; }
+.order-full-cancel summary::-webkit-details-marker { display:none; }
+.order-full-cancel summary small { color:var(--muted); font-size:.86rem; font-weight:500; }
+.order-full-cancel[open] summary { border-bottom:1px solid color-mix(in srgb,#c32b16,var(--border) 65%); }
+.order-full-cancel .order-cancel-form { margin:0; border:0; border-radius:0; background:transparent; }
+.order-cancellation-policy-link { display:inline-flex; align-items:center; gap:6px; align-self:center; color:var(--primary); font-weight:700; text-decoration:none; }
+.order-workflow-note { display:flex; align-items:center; gap:7px; margin:12px 0; padding:10px 12px; border:1px solid color-mix(in srgb,var(--primary),var(--border) 55%); border-radius:6px; background:color-mix(in srgb,var(--primary),var(--bg) 94%); color:var(--text); font-size:.95rem; }
+.order-workflow-note .bi { color:var(--primary); }
+@keyframes order-control-in { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:none; } }
+@media (max-width:600px) { .order-full-cancel summary { grid-template-columns:auto minmax(0,1fr); } .order-full-cancel summary small { grid-column:2; } }
