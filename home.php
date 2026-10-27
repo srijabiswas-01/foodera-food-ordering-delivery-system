@@ -9,6 +9,7 @@ $count = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
 $homeCategories = array();
 $homeFavourites = array();
 $homeCategoryImages = array();
+$homeTestimonials = array();
 foreach (siteGallery() as $galleryImage) {
     $galleryCategory = trim((string) ($galleryImage['category_name'] ?? ''));
     if ($galleryCategory !== '' && empty($homeCategoryImages[$galleryCategory])) {
@@ -30,6 +31,11 @@ if ($homeConnection) {
     $favouriteSql = 'SELECT foods.*,COALESCE(NULLIF(foods.picture, \'\'), ' . $galleryImage . ') AS display_picture FROM foods' . ($hasCategoryStatus ? ' INNER JOIN food_categories ON food_categories.name=foods.category WHERE food_categories.is_active=1' : ' WHERE 1=1') . ($hasFoodStatus ? ' AND foods.is_active=1' : '') . ' ORDER BY foods.id DESC LIMIT 8';
     $favouritesResult = @mysqli_query($homeConnection, $favouriteSql);
     if ($favouritesResult) $homeFavourites = mysqli_fetch_all($favouritesResult, MYSQLI_ASSOC);
+    $feedbackTable = @mysqli_query($homeConnection, "SHOW TABLES LIKE 'delivery_feedback'");
+    if ($feedbackTable && mysqli_num_rows($feedbackTable) > 0) {
+        $feedbackResult = @mysqli_query($homeConnection, "SELECT f.food_rating,f.service_rating,f.ordering_rating,f.comment,o.name FROM delivery_feedback f LEFT JOIN orders o ON o.orderid=f.orderid WHERE f.status='approved' AND f.consent_to_feature=1 AND TRIM(f.comment)<>'' ORDER BY f.created_at DESC LIMIT 3");
+        if ($feedbackResult) $homeTestimonials = mysqli_fetch_all($feedbackResult, MYSQLI_ASSOC);
+    }
 }
 $pageTitle = 'Online Food Delivery';
 $activePage = 'home';
@@ -74,6 +80,8 @@ include('includes/public-header.php');
             <span><?php echo siteEscape(siteSetting('home.highlight_3_body')); ?></span>
         </div>
     </section>
+
+    <?php if ($homeTestimonials) { ?><section class="home-testimonials" aria-labelledby="home-testimonials-heading"><div class="home-section-heading"><p>Customer stories</p><h2 id="home-testimonials-heading">Loved by Foodera customers</h2><span>Verified delivery feedback shared with permission.</span></div><div class="home-testimonial-grid"><?php foreach ($homeTestimonials as $testimonial) { $rating = (int) round(((int) $testimonial['food_rating'] + (int) $testimonial['service_rating'] + (int) $testimonial['ordering_rating']) / 3); ?><article class="home-testimonial-card"><div class="home-testimonial-stars" aria-label="<?php echo $rating; ?> out of 5 stars"><?php for ($star = 1; $star <= 5; $star++) { ?><i class="bi bi-star<?php echo $star <= $rating ? '-fill' : ''; ?>" aria-hidden="true"></i><?php } ?></div><blockquote>“<?php echo siteEscape($testimonial['comment']); ?>”</blockquote><footer><i class="bi bi-patch-check-fill" aria-hidden="true"></i><span><?php echo siteEscape($testimonial['name'] ?: 'Verified Foodera customer'); ?></span><small>Verified order</small></footer></article><?php } ?></div></section><?php } ?>
 
     <?php $homeOffers = offerPublicList(); if ($homeOffers) { ?>
     <section class="home-offers" aria-labelledby="home-offers-heading">
